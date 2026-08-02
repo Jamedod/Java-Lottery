@@ -1,0 +1,196 @@
+import java.io.*;
+import java.util.*;
+
+/**
+ * Program Name: H_T_Z_A_ProjectMethods.java
+ * Purpose: ToolBox for the project 
+ * Coder: Htoo Tay Zar Aung
+ * Date: Apr 1, 2026
+ */
+
+public class H_T_Z_A_ProjectMethods
+{
+	/**
+	 * Method name: getNextSeries <br>
+	 * Purpose: A public class method that will accept an scanner object and return an array of integer<br>
+	 * Accepts: Scanner token and Int<br>
+	 * Returns: Array of integer<br>
+	 * Date: April, 1st 2026
+	 * 
+	 */
+	public static int[] getNextSeries(Scanner file, int num) //int num is for the purpose of creating how many elements are in each array
+	{
+		//Making variables
+		String changeLine;
+		int[] lottoStuff = new int[num];
+
+		//Loop to test if the file has next line
+		while(file.hasNextLine())
+		{
+			int count = 0;//acts as an index count
+			//Creates scanner as a buffer for the line
+			changeLine = file.nextLine();
+			Scanner nextLine = new Scanner(changeLine);
+			//using delimiter for the buffer scanner
+			nextLine.useDelimiter(",");
+			//loop to test if there is value in next element
+			while(nextLine.hasNext())
+			{
+				//puts the value inside the lottoNum variable
+				int lottoNum = nextLine.nextInt();					
+				//puts the value into the lottoStuff array with the index count
+				lottoStuff[count] = lottoNum;
+				
+				count++;//increment count
+			}//end inner while
+
+			nextLine.close();
+			break;
+		}//end Outer While
+
+		return lottoStuff;
+	}//end method
+	/**
+	 * Method name: countFileSize <br>
+	 * Purpose: A public class method that will count the number of elements in an array<br>
+	 * Accepts: Type String<br>
+	 * Returns: Type Integer<br>
+	 * Date: April, 1st 2026
+	 * 
+	 */
+	public static int countFileSize(String file)//gets the dataFile's String name
+	{
+		String changeLine;
+		int counter = 0;
+		File lotto = new File(file);//creates a new file here instead of using the scanner from the main
+		//Since I am using a new scanner for file another try-catch code
+		try
+		{
+			Scanner fileInput = new Scanner(lotto);
+			while(fileInput.hasNextLine())
+		  {
+				changeLine = fileInput.nextLine();
+				Scanner nextLine = new Scanner(changeLine);
+				
+				nextLine.useDelimiter(",");
+				while(nextLine.hasNext())
+				{
+					nextLine.nextInt();
+					counter++;
+				
+				}//end inner while
+				nextLine.close();
+				break;
+		  }//end outer while
+			fileInput.close();
+			}catch(FileNotFoundException e){
+			System.out.println("Could not find the file, please check path name and try again.");
+			System.exit(0);//to exit the program gracefully
+		}
+			return counter;
+	}//end method
+	
+	public static int countLines(String file)
+	{
+		int lineCount = 0;
+		File lotto = new File(file);
+		try
+		{
+		Scanner fileInput = new Scanner(lotto);
+		while(fileInput.hasNextLine())//just this loop to see how many tickets are in the file
+		{
+		    fileInput.nextLine();
+		    lineCount++;
+		}//end Outer While
+		fileInput.close();
+		}catch(FileNotFoundException e){
+			System.out.println("Could not find the file, please check path name and try again.");
+			System.exit(0);//exits program gracefully
+		}
+		return lineCount;
+	}//end method
+	
+	
+	/**
+	 * Method name: countMatchingNumbers() <br>
+	 * Purpose: A public class method that will check to see if the first array
+	 * and second arrays are matching. <br>
+	 * Accepts: two int arrays<br>
+	 * Returns: type int<br>
+	 * Date: April, 1st 2026
+	 * 
+	 */
+	public static int countMatchingNumbers(int[] winNum, int[] testNum)
+	{
+		int matchCount = 0;
+		for(int i = 0; i < winNum.length; i++)
+		{
+			for(int j = 0; j < testNum.length; j++)
+			{
+				if(testNum[j] == winNum[i])
+				{
+					matchCount++;
+					break;
+				}//end if
+			}//end inner for
+		}//end outer for
+		return matchCount;
+	}//end method
+	
+	/**
+	 * Method name: formatTicketNumber() <br>
+	 * Purpose: A public class method that will format the numbers
+	 * as a formatted string<br>
+	 * Accepts: int array<br>
+	 * Returns: formatted string<br>
+	 * Date: April, 1st 2026
+	 * 
+	 */
+	public static String formatTicketNumber(int[] testArray)
+	{
+		String result = "";
+		
+		for (int i = 0; i < testArray.length; i++)
+		{
+			result += testArray[i];
+			if(i < (testArray.length-1))
+			{
+				result += ", ";
+			}//end if
+		}//end for
+		
+		return result;
+	}//end method
+	/**
+	 * Method name: matchString()<br>
+	 * Purpose: A public class method that will match each array of type String<br>
+	 * Accepts: an ArrayList String<br>
+	 * Returns: int count<br>
+	 * Date: April 10, 2026
+	 * 
+	 */
+	public static int matchString(ArrayList<String> match, String check)
+	{
+		int counter = 1;//counter starts at 1 to prevent the checker from checking the starting values
+		for(int i = match.size()-1; i >= 0; i--)//reverse loop because the checking value is at index 0
+		{
+			if(match.get(i).equals(check))
+			{
+				counter++;
+				match.remove(i);//removes to prevent it from appearing again later
+			}//end if
+			
+		}//end for
+		
+		return counter;
+	}//end method
+}
+//end class
+/**
+ * Method name: <br>
+ * Purpose: A public class method that will<br>
+ * Accepts: <br>
+ * Returns: <br>
+ * Date: 
+ * 
+ */
